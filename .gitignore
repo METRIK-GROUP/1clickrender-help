@@ -11,3 +11,4 @@ supabase/.branches/
 *.log
 cov/
 coverage.lcov
+.vercel
