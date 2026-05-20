@@ -1,0 +1,14 @@
+{
+  "title": "1 Click Render — Help",
+  "placeholder": "Type your question or paste a screenshot of the error...",
+  "send": "Send",
+  "attach": "📎 Attach image",
+  "error_log_label": "Paste error log here (optional)",
+  "thinking": "Thinking...",
+  "rate_limit": "Too many questions too fast. Try in a few minutes.",
+  "error_generic": "Something went wrong. Try again.",
+  "feedback_thanks": "Thanks for the feedback!",
+  "image_too_large": "Image too large (max 4MB).",
+  "image_invalid": "Invalid image format.",
+  "welcome": "Hi! I'm the 1 Click Render assistant. Ask me about installation, activation, viewport, prompts or method."
+}

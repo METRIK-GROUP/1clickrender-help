@@ -1,0 +1,14 @@
+{
+  "title": "1 Click Render — Ayuda",
+  "placeholder": "Escribe tu duda o pega una captura del error...",
+  "send": "Enviar",
+  "attach": "📎 Adjuntar imagen",
+  "error_log_label": "Pega aquí el log de error (opcional)",
+  "thinking": "Pensando...",
+  "rate_limit": "Demasiadas preguntas en poco tiempo. Intenta en unos minutos.",
+  "error_generic": "Algo salió mal. Intenta de nuevo.",
+  "feedback_thanks": "¡Gracias por tu feedback!",
+  "image_too_large": "Imagen demasiado grande (máx 4MB).",
+  "image_invalid": "Formato de imagen inválido.",
+  "welcome": "¡Hola! Soy el asistente de 1 Click Render. Pregúntame sobre instalación, activación, viewport, prompts o método."
+}
