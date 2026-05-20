@@ -1,0 +1,17 @@
+{
+  "name": "1clickrender-help",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:unit": "deno test --allow-env --allow-read tests/unit/",
+    "test:integration": "deno test --allow-env --allow-net --allow-read tests/integration/",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "build:kb": "deno run --allow-read --allow-write scripts/build-kb-cache.ts",
+    "dev:functions": "supabase functions serve --env-file supabase/.env.local"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}
