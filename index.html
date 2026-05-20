@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1 Click Render — Ajuda</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@11/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1 id="title">1 Click Render — Ajuda</h1>
+    <nav class="lang-switch" id="lang-switch">
+      <button data-lang="pt-br" title="Português"><img src="assets/flags/br.svg" alt="PT"></button>
+      <button data-lang="en" title="English"><img src="assets/flags/us.svg" alt="EN"></button>
+      <button data-lang="es" title="Español"><img src="assets/flags/es.svg" alt="ES"></button>
+    </nav>
+  </header>
+  <main id="chat">
+    <div class="welcome" id="welcome"></div>
+  </main>
+  <footer>
+    <div class="image-preview" id="image-preview" hidden>
+      <img id="preview-img" alt="">
+      <button id="preview-remove">×</button>
+    </div>
+    <div class="input-row">
+      <button class="icon" id="attach" title="Anexar imagem">📎</button>
+      <textarea id="input" rows="1"></textarea>
+      <button class="primary" id="send">Enviar</button>
+    </div>
+    <div class="error-log-toggle" id="error-log-toggle">＋ Cole aqui o log de erro (opcional)</div>
+    <div class="error-log-area" id="error-log-area" hidden>
+      <textarea id="error-log" rows="4"></textarea>
+    </div>
+    <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" hidden>
+  </footer>
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>
