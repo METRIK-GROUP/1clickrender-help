@@ -1,0 +1,14 @@
+[
+  { "role": "user", "content": "Como instalo o plugin no Mac?" },
+  { "role": "assistant", "content": "Para instalar no Mac...", "feedback": 1 },
+  { "role": "user", "content": "Tenho dúvida na instalação Mac" },
+  { "role": "assistant", "content": "...", "feedback": 1 },
+  { "role": "user", "content": "Plugin não instala no Mac, ajuda" },
+  { "role": "assistant", "content": "...", "feedback": -1 },
+  { "role": "user", "content": "Como exporto pra Lumion?" },
+  { "role": "assistant", "content": "Não sei, contate suporte." },
+  { "role": "user", "content": "Quero exportar para o Lumion" },
+  { "role": "assistant", "content": "Não tenho info sobre isso." },
+  { "role": "user", "content": "Lumion exportação?" },
+  { "role": "assistant", "content": "Sem info." }
+]
