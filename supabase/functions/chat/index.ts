@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "npm:zod@3.23.8";
 import { createServiceClient } from "../_shared/supabase.ts";
 import { hashIp } from "../_shared/ip.ts";
 import { checkAndIncrement } from "../_shared/rate-limit.ts";
@@ -23,7 +23,8 @@ const CORS = {
 };
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
+  try {
+    if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 });
 
   let body: z.infer<typeof Body>;
@@ -162,4 +163,11 @@ Deno.serve(async (req) => {
       ...CORS,
     },
   });
+  } catch (outerErr) {
+    console.error("CHAT_HANDLER_ERROR", outerErr, (outerErr as Error)?.stack);
+    return new Response(
+      JSON.stringify({ error: "internal", detail: String(outerErr), stack: (outerErr as Error)?.stack }),
+      { status: 500, headers: { "Content-Type": "application/json", ...CORS } },
+    );
+  }
 });
