@@ -1,0 +1,28 @@
+name: deploy-edge
+on:
+  push:
+    branches: [main]
+    paths: ["supabase/**", "kb/**"]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+        with: { deno-version: v1.46.x }
+      - uses: supabase/setup-cli@v1
+        with: { version: latest }
+      - name: Build KB cache
+        run: deno run --allow-read --allow-write scripts/build-kb-cache.ts
+      - name: Push migrations
+        run: supabase db push --password ${{ secrets.SUPABASE_DB_PASSWORD }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_REF }}
+      - name: Deploy functions
+        run: |
+          for fn in chat feedback support-context resolve-token admin-auth admin-data summarize-daily; do
+            supabase functions deploy $fn --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          done
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
