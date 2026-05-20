@@ -1,4 +1,4 @@
-const EDGE = "https://<PROJECT_REF>.supabase.co/functions/v1"; // replaced at deploy
+const EDGE = "https://fpyabrrjtwrsodyvjjlp.supabase.co/functions/v1"; // replaced at deploy
 
 const $ = (id) => document.getElementById(id);
 

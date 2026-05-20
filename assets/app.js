@@ -1,4 +1,4 @@
-const EDGE = "https://<PROJECT_REF>.supabase.co/functions/v1"; // replaced at deploy via env
+const EDGE = "https://fpyabrrjtwrsodyvjjlp.supabase.co/functions/v1"; // replaced at deploy via env
 const STATE = {
   lang: localStorage.getItem("lang") || (navigator.language.startsWith("en") ? "en" : navigator.language.startsWith("es") ? "es" : "pt-br"),
   sessionId: localStorage.getItem("sessionId") || null,

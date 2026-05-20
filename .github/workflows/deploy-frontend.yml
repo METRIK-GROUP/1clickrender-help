@@ -15,10 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inject Supabase project ref
-        run: |
-          sed -i "s|<PROJECT_REF>|${{ secrets.SUPABASE_PROJECT_REF }}|g" assets/app.js
-          sed -i "s|<PROJECT_REF>|${{ secrets.SUPABASE_PROJECT_REF }}|g" assets/admin.js
       - uses: actions/upload-pages-artifact@v3
         with: { path: . }
   deploy:
