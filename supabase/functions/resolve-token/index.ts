@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "npm:zod@3.23.8";
 import { createServiceClient } from "../_shared/supabase.ts";
 import { verifyJWT } from "../_shared/auth.ts";
 
