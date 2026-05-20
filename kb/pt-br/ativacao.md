@@ -16,4 +16,4 @@ Após instalar o plugin, ative com seu email de compra:
 
 **"Host não conhecido"**: firewall/antivírus bloqueando. Veja [erros-comuns.md](erros-comuns.md).
 
-**"Limite de dispositivos"**: você já ativou em 3 PCs. Vá em help.1clickrender.com.br e libere um dispositivo antigo.
+**"Limite de dispositivos"**: você já ativou em 3 PCs. Vá em help.institutometrik.com.br e libere um dispositivo antigo.

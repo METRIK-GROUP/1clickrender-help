@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build an AI support assistant for the 1 Click Render product at `help.1clickrender.com.br` with a public chat (no login), automated kaizen analysis loop, and a built-in admin dashboard — all isolated in a new Supabase project.
+**Goal:** Build an AI support assistant for the 1 Click Render product at `help.institutometrik.com.br` with a public chat (no login), automated kaizen analysis loop, and a built-in admin dashboard — all isolated in a new Supabase project.
 
 **Architecture:** Static frontend on GitHub Pages (vanilla HTML/JS) → Supabase Edge Functions (Deno) handle chat, support-context, feedback, admin endpoints, and a daily kaizen cron → Postgres stores sessions/messages/feedback/gaps/daily_reports → Gemini 2.5 Flash provides the AI (multimodal, prompt-cached KB). KB lives in `kb/pt-br/*.md` files compiled into a single cache string at deploy time. Multi-language UI (PT/EN/ES) with KB only in PT-BR; system prompt instructs the model to translate on the fly.
 
@@ -18,7 +18,7 @@
 1clickrender-help/
 ├── index.html                          # Chat UI
 ├── admin.html                          # Admin dashboard UI
-├── CNAME                               # help.1clickrender.com.br
+├── CNAME                               # help.institutometrik.com.br
 ├── README.md
 ├── package.json                        # devDeps for tooling (playwright, deno tasks)
 ├── playwright.config.ts
@@ -109,7 +109,7 @@
 
 Run:
 ```bash
-gh repo create METRIK-GROUP/1clickrender-help --public --description "AI support assistant for 1 Click Render — help.1clickrender.com.br"
+gh repo create METRIK-GROUP/1clickrender-help --public --description "AI support assistant for 1 Click Render — help.institutometrik.com.br"
 cd ~/Documents
 gh repo clone METRIK-GROUP/1clickrender-help
 cd 1clickrender-help
@@ -123,7 +123,7 @@ Create `README.md`:
 ```markdown
 # 1clickrender-help
 
-AI support assistant for 1 Click Render. Lives at https://help.1clickrender.com.br.
+AI support assistant for 1 Click Render. Lives at https://help.institutometrik.com.br.
 
 ## Stack
 - Frontend: vanilla HTML/JS, GitHub Pages
@@ -162,7 +162,7 @@ supabase/.temp/
 
 Create `CNAME`:
 ```
-help.1clickrender.com.br
+help.institutometrik.com.br
 ```
 
 - [ ] **Step 5: Initial commit**
@@ -244,15 +244,15 @@ Manual (Rodrigo): in DNS panel of `1clickrender.com.br`, add record:
 - Value: metrik-group.github.io
 - TTL: 3600
 
-Expected: `dig help.1clickrender.com.br CNAME +short` returns `metrik-group.github.io.`
+Expected: `dig help.institutometrik.com.br CNAME +short` returns `metrik-group.github.io.`
 
 - [ ] **Step 2: Enable GitHub Pages**
 
 Run:
 ```bash
-gh api -X PATCH /repos/METRIK-GROUP/1clickrender-help/pages -f cname=help.1clickrender.com.br -f source.branch=main -f source.path=/
+gh api -X PATCH /repos/METRIK-GROUP/1clickrender-help/pages -f cname=help.institutometrik.com.br -f source.branch=main -f source.path=/
 ```
-Or via web: repo Settings → Pages → Source: `main` / `/ (root)` → custom domain `help.1clickrender.com.br` → enforce HTTPS.
+Or via web: repo Settings → Pages → Source: `main` / `/ (root)` → custom domain `help.institutometrik.com.br` → enforce HTTPS.
 
 Expected: GitHub Pages shows green checkmark for custom domain (DNS may take 5-30min to propagate).
 
@@ -1648,7 +1648,7 @@ const Body = z.object({
 });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -1918,7 +1918,7 @@ const Body = z.object({
 });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -2033,7 +2033,7 @@ Deno.test({
     assertEquals(resp.status, 200);
     const body = await resp.json();
     assert(body.token);
-    assert(body.url.includes("help.1clickrender.com.br"));
+    assert(body.url.includes("help.institutometrik.com.br"));
   },
 });
 
@@ -2112,7 +2112,7 @@ Deno.serve(async (req) => {
   return new Response(
     JSON.stringify({
       token,
-      url: `https://help.1clickrender.com.br/?t=${encodeURIComponent(token)}`,
+      url: `https://help.institutometrik.com.br/?t=${encodeURIComponent(token)}`,
     }),
     { status: 200, headers: { "Content-Type": "application/json" } },
   );
@@ -2154,7 +2154,7 @@ import { verifyJWT } from "../_shared/auth.ts";
 const Body = z.object({ token: z.string().min(20) });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -2874,7 +2874,7 @@ Após instalar o plugin, ative com seu email de compra:
 
 **"Host não conhecido"**: firewall/antivírus bloqueando. Veja [erros-comuns.md](erros-comuns.md).
 
-**"Limite de dispositivos"**: você já ativou em 3 PCs. Vá em help.1clickrender.com.br e libere um dispositivo antigo.
+**"Limite de dispositivos"**: você já ativou em 3 PCs. Vá em help.institutometrik.com.br e libere um dispositivo antigo.
 ```
 
 Create `kb/pt-br/viewport.md`:
@@ -3404,7 +3404,7 @@ import { signJWT } from "../_shared/auth.ts";
 const Body = z.object({ password: z.string() });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Credentials": "true",
@@ -3478,7 +3478,7 @@ import { createServiceClient } from "../_shared/supabase.ts";
 import { verifyJWT } from "../_shared/auth.ts";
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Credentials": "true",
@@ -3972,7 +3972,7 @@ git commit -m "ci(deploy): publish frontend to GitHub Pages on main push"
 git push
 ```
 
-Expected: workflow runs, GitHub Pages deploys, `https://help.1clickrender.com.br` loads (after DNS).
+Expected: workflow runs, GitHub Pages deploys, `https://help.institutometrik.com.br` loads (after DNS).
 
 ### Task 11.3: GitHub Actions — edge functions deploy
 
@@ -4049,11 +4049,11 @@ Expected: SSE stream with chunks.
 
 - [ ] **Step 2: Open site in browser**
 
-Open `https://help.1clickrender.com.br`. Send a message. Expected: streaming reply renders.
+Open `https://help.institutometrik.com.br`. Send a message. Expected: streaming reply renders.
 
 - [ ] **Step 3: Test admin login**
 
-Open `https://help.1clickrender.com.br/admin.html`. Enter ADMIN_PASSWORD. Expected: overview loads.
+Open `https://help.institutometrik.com.br/admin.html`. Enter ADMIN_PASSWORD. Expected: overview loads.
 
 - [ ] **Step 4: Manually trigger summarize-daily**
 
@@ -4084,7 +4084,7 @@ Replace `README.md` with:
 ```markdown
 # 1clickrender-help
 
-AI support assistant for **1 Click Render** at https://help.1clickrender.com.br.
+AI support assistant for **1 Click Render** at https://help.institutometrik.com.br.
 
 ## What it does
 

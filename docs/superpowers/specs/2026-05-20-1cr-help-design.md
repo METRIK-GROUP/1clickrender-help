@@ -10,7 +10,7 @@
 
 O 1 Click Render (1CR) é um curso da Metrik Instituto que ensina alunos a usar IA pra gerar renders fotorrealistas a partir de viewports do SketchUp, Revit e Archicad, via plugin proprietário. Hoje o suporte é manual (Rodrigo + time respondendo dúvidas em DM, email e Hotmart Club). Volume cresce com matrículas, e dúvidas se repetem.
 
-**Objetivo:** lançar um assistente de IA em página pública (`help.1clickrender.com.br`) que:
+**Objetivo:** lançar um assistente de IA em página pública (`help.institutometrik.com.br`) que:
 
 1. Responde dúvidas frequentes sobre instalação, ativação e uso do plugin
 2. Diagnostica bugs comuns (firewall, host não conhecido, problemas de viewport)
@@ -36,7 +36,7 @@ O 1 Click Render (1CR) é um curso da Metrik Instituto que ensina alunos a usar 
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  Frontend estático — help.1clickrender.com.br           │
+│  Frontend estático — help.institutometrik.com.br           │
 │  GitHub Pages (METRIK-GROUP/1clickrender-help)                   │
 │  HTML + JS vanilla + marked.js                          │
 │  Multi-idioma (PT-BR / EN / ES) via i18n JSON           │
@@ -70,7 +70,7 @@ O 1 Click Render (1CR) é um curso da Metrik Instituto que ensina alunos a usar 
 ### 2.2 Frontend
 
 **Repo:** `METRIK-GROUP/1clickrender-help`
-**Hospedagem:** GitHub Pages, domínio customizado `help.1clickrender.com.br`
+**Hospedagem:** GitHub Pages, domínio customizado `help.institutometrik.com.br`
 **Stack:** HTML + CSS + JS vanilla. Dependências externas: `marked.js` (render markdown), `dompurify` (sanitização de output da IA).
 
 **Estrutura de pastas:**
@@ -233,7 +233,7 @@ create index idx_daily_reports_date on daily_reports(report_date desc);
 - Valida `license_id` consultando o projeto `IPDP-Desafio` via service_role cross-project (read-only)
 - Cria sessão com `plugin_context` populado **EXCLUINDO `license_id`** (PII). O `plugin_context` jsonb só guarda: `{sketchup_version, last_error, os, plugin_version}`
 - Gera JWT contendo `session_id` (não `license_id`) e validade 1h
-- Retorna `{token, url: "https://help.1clickrender.com.br/?t=<token>"}`
+- Retorna `{token, url: "https://help.institutometrik.com.br/?t=<token>"}`
 - Plugin abre essa URL no navegador padrão
 
 **`POST /feedback`**
@@ -367,7 +367,7 @@ Conversas → Clusterização → Detecção de gap → Ação acionável → At
 
 Tudo dentro do nosso servidor. Sem dependência externa de Notion.
 
-- **Dashboard `/admin`** em `help.1clickrender.com.br/admin` (incluído no MVP):
+- **Dashboard `/admin`** em `help.institutometrik.com.br/admin` (incluído no MVP):
   - Proteção por senha única em env var (`ADMIN_PASSWORD`), validada server-side via Edge Function `admin-auth`
   - Login simples: tela com input de senha, ao acertar grava cookie HTTP-only com JWT (8h validade)
   - Páginas:
@@ -381,7 +381,7 @@ Tudo dentro do nosso servidor. Sem dependência externa de Notion.
 
 ### 3.4 Loop de melhoria contínua
 
-1. Rodrigo abre `help.1clickrender.com.br/admin` de manhã, lê relatório do dia (página `/admin/reports`)
+1. Rodrigo abre `help.institutometrik.com.br/admin` de manhã, lê relatório do dia (página `/admin/reports`)
 2. Vê issue de gap no GitHub (ou pelo `/admin/gaps`), escreve `kb/pt-br/<slug>.md`, commit, push
 3. Deploy automático → KB atualizada → próximas perguntas similares já têm resposta
 4. No próximo relatório, cluster volta como "resolução validada" ✅
@@ -444,7 +444,7 @@ Nenhum secret no frontend. Nenhum secret commitado.
 ### 5.1 Repos e domínios
 
 - **Repo:** `METRIK-GROUP/1clickrender-help` (novo)
-- **Domínio:** `help.1clickrender.com.br` (CNAME → `metrik-group.github.io`)
+- **Domínio:** `help.institutometrik.com.br` (CNAME → `metrik-group.github.io`)
 - **Supabase project:** `1clickrender` (novo, free tier)
 
 ### 5.2 GitHub Actions
@@ -536,7 +536,7 @@ Cenário: 1000 conversas/dia, ~5 msgs por conversa, KB 30k tokens.
 **Fase 0 — Infra (1-2 dias)**
 - Criar repo `METRIK-GROUP/1clickrender-help`
 - Criar projeto Supabase `1clickrender`
-- Configurar domínio `help.1clickrender.com.br` + DNS (CNAME → `metrik-group.github.io`)
+- Configurar domínio `help.institutometrik.com.br` + DNS (CNAME → `metrik-group.github.io`)
 - Setar todos os secrets (Gemini, JWT, ADMIN_PASSWORD, GitHub, IP_SALT)
 
 **Fase 1 — Backend (2-3 dias)**
@@ -576,7 +576,7 @@ Cenário: 1000 conversas/dia, ~5 msgs por conversa, KB 30k tokens.
 
 **Fase 7 — Plugin integration (pós-MVP)**
 - Botão "Pedir ajuda" no plugin SketchUp/Revit/Archicad
-- POST `/support-context` → abre `help.1clickrender.com.br/?t=<token>`
+- POST `/support-context` → abre `help.institutometrik.com.br/?t=<token>`
 
 ---
 
@@ -599,7 +599,7 @@ Cenário: 1000 conversas/dia, ~5 msgs por conversa, KB 30k tokens.
 ## 11. Decisões confirmadas (2026-05-20)
 
 - [x] Nome do projeto Supabase: **`1clickrender`**
-- [x] Domínio: **`help.1clickrender.com.br`** (raiz `1clickrender.com.br`)
+- [x] Domínio: **`help.institutometrik.com.br`** (raiz `1clickrender.com.br`)
 - [x] Análise / kaizen: **tudo no nosso servidor**, sem Notion. Dashboard `/admin` interno + GitHub Issues
 - [x] Multi-idioma no MVP: **UI traduzida (PT/EN/ES), KB só em PT-BR** (system prompt traduz na hora pra outros idiomas)
 - [x] Upload de imagem: **incluído no MVP** (Gemini Flash multimodal)

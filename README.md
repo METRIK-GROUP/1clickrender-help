@@ -1,6 +1,6 @@
 # 1clickrender-help
 
-AI support assistant for **1 Click Render** at https://help.1clickrender.com.br.
+AI support assistant for **1 Click Render** at https://help.institutometrik.com.br.
 
 ## What it does
 

@@ -4,7 +4,7 @@ import { signJWT } from "../_shared/auth.ts";
 const Body = z.object({ password: z.string() });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
   "Access-Control-Allow-Credentials": "true",

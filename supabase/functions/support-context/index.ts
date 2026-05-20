@@ -55,7 +55,7 @@ Deno.serve(async (req) => {
   return new Response(
     JSON.stringify({
       token,
-      url: `https://help.1clickrender.com.br/?t=${encodeURIComponent(token)}`,
+      url: `https://help.institutometrik.com.br/?t=${encodeURIComponent(token)}`,
     }),
     { status: 200, headers: { "Content-Type": "application/json" } },
   );

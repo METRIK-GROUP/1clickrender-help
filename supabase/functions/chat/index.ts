@@ -17,7 +17,7 @@ const Body = z.object({
 });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };

@@ -20,7 +20,7 @@ Deno.test({
     assertEquals(resp.status, 200);
     const body = await resp.json();
     assert(body.token);
-    assert(body.url.includes("help.1clickrender.com.br"));
+    assert(body.url.includes("help.institutometrik.com.br"));
   },
 });
 

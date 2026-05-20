@@ -5,7 +5,7 @@ import { verifyJWT } from "../_shared/auth.ts";
 const Body = z.object({ token: z.string().min(20) });
 
 const CORS = {
-  "Access-Control-Allow-Origin": "https://help.1clickrender.com.br",
+  "Access-Control-Allow-Origin": "https://help.institutometrik.com.br",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
