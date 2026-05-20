@@ -19,9 +19,11 @@ export async function signJWT(
   ttlSeconds: number,
 ): Promise<string> {
   const key = await getKey();
+  const now = Math.floor(Date.now() / 1000);
+  const exp = ttlSeconds <= 0 ? now - 1 : now + ttlSeconds;
   return await create(
     { alg: "HS256", typ: "JWT" },
-    { ...payload, exp: getNumericDate(ttlSeconds), iat: getNumericDate(0) },
+    { ...payload, exp, iat: now },
     key,
   );
 }
