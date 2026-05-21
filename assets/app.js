@@ -179,7 +179,8 @@ async function sendMessage() {
   const pendingImage = STATE.pendingImage;
   clearImagePreview();
 
-  const placeholder = appendMessage("assistant", "_" + STATE.i18n.thinking + "_");
+  const placeholder = appendMessage("assistant", "");
+  setMessageBody(placeholder, '<div class="typing-dots" aria-label="' + (STATE.i18n.thinking || "Pensando") + '"><span></span><span></span><span></span></div>');
   let fullText = "";
   let assistantMessageId = null;
 

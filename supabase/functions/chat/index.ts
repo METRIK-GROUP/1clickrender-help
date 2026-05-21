@@ -65,7 +65,7 @@ Deno.serve(async (req) => {
     const ip = await hashIp(req);
 
     // Rate limit per IP (20/hour)
-    const ipLimit = await checkAndIncrement(client, `ip:${ip}`, 3600, 20);
+    const ipLimit = await checkAndIncrement(client, `ip:${ip}`, 3600, 60);
     if (!ipLimit.allowed) {
       return new Response(JSON.stringify({ error: "rate_limit_ip" }), {
         status: 429,
