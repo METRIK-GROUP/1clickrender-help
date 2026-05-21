@@ -141,6 +141,7 @@ body::after {
 .brand {
   display: flex;
   align-items: center;
+  gap: 10px;
   text-decoration: none;
   flex-shrink: 0;
 }
@@ -150,6 +151,15 @@ body::after {
   width: 32px;
   display: block;
   filter: invert(var(--logo-invert, 0));
+  flex-shrink: 0;
+}
+
+.brand-tag {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
 }
 
 .header-right {
@@ -727,6 +737,7 @@ button.send svg {
   .lang-switch { gap: 4px; }
   .signature-by { font-size: 10px; margin-left: 0; }
   .brand-logo { height: 28px; width: 28px; }
+  .brand-tag { display: none; }
 
   .welcome-state { padding-bottom: 200px; }
   .hero { padding: 32px 16px 20px; }
