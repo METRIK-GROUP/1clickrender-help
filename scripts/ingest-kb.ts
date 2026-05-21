@@ -18,7 +18,7 @@ const CHUNK_CHARS = 1500;
 const CHUNK_OVERLAP = 200;
 const EMBED_MODEL = "gemini-embedding-001";
 const EMBED_DIM = 768;
-const EMBED_DELAY_MS = 80; // ~750 RPM safety margin (tier 1 is 1500 RPM)
+const EMBED_DELAY_MS = 700; // ~85 RPM safety margin (free tier is 100 RPM)
 
 // Files NEVER ingested via RAG (always injected as fixed context)
 const FIXED_CONTEXT_FILES = new Set([
@@ -96,7 +96,7 @@ function auditLeak(content: string, relPath: string): string[] {
   return hits;
 }
 
-async function embedOne(text: string, retries = 5): Promise<number[]> {
+async function embedOne(text: string, retries = 8): Promise<number[]> {
   const url =
     `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:embedContent?key=${GEMINI_API_KEY}`;
   const body = {
@@ -185,10 +185,30 @@ async function main() {
     return;
   }
 
-  // Wipe table (full reindex on each run, simpler and safe for our scale)
-  console.log(`[ingest-kb] clearing existing kb_docs...`);
-  const { error: delErr } = await client!.from("kb_docs").delete().neq("id", "00000000-0000-0000-0000-000000000000");
-  if (delErr) throw delErr;
+  // Resumable: load already-ingested (path, chunk_idx) pairs and skip them.
+  const resume = !args.has("--wipe");
+  let alreadyDone = new Set<string>();
+  if (resume) {
+    console.log(`[ingest-kb] resume mode: loading existing kb_docs keys...`);
+    let from = 0;
+    const pageSize = 1000;
+    while (true) {
+      const { data, error } = await client!.from("kb_docs")
+        .select("path, chunk_idx")
+        .eq("lang", "pt-br")
+        .range(from, from + pageSize - 1);
+      if (error) throw error;
+      if (!data || data.length === 0) break;
+      for (const r of data) alreadyDone.add(`${r.path}::${r.chunk_idx}`);
+      if (data.length < pageSize) break;
+      from += pageSize;
+    }
+    console.log(`[ingest-kb] resume: ${alreadyDone.size} chunks already ingested, skipping`);
+  } else {
+    console.log(`[ingest-kb] --wipe specified: clearing existing kb_docs...`);
+    const { error: delErr } = await client!.from("kb_docs").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    if (delErr) throw delErr;
+  }
 
   // Embed (one-by-one) + upsert in DB batches of 50
   const DB_BATCH = 50;
@@ -217,8 +237,14 @@ async function main() {
     pending = [];
   }
 
+  let skipped = 0;
   for (let i = 0; i < records.length; i++) {
     const r = records[i];
+    const key = `${r.path}::${r.chunk_idx}`;
+    if (alreadyDone.has(key)) {
+      skipped++;
+      continue;
+    }
     const emb = await embedOne(r.content);
     pending.push({
       path: r.path,
@@ -232,6 +258,7 @@ async function main() {
     await new Promise((res) => setTimeout(res, EMBED_DELAY_MS));
   }
   await flushPending();
+  console.log(`[ingest-kb] resume skipped: ${skipped} already-done chunks`);
 
   console.log(`[ingest-kb] DONE: ${totalIngested} chunks ingested.`);
 }
