@@ -728,7 +728,7 @@ button.send svg {
   .signature-by { font-size: 10px; margin-left: 0; }
   .brand-logo { height: 28px; width: 28px; }
 
-  .welcome-state { padding-bottom: 260px; }
+  .welcome-state { padding-bottom: 360px; }
   .hero { padding: 40px 16px 24px; }
   .hero-logo { height: clamp(60px, 18vw, 80px); }
   .hero p { font-size: 15px; padding: 0 8px; }
