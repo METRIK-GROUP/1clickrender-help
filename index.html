@@ -4,38 +4,150 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>1 Click Render — Ajuda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <script src="https://cdn.jsdelivr.net/npm/marked@11/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1 id="title">1 Click Render — Ajuda</h1>
-    <nav class="lang-switch" id="lang-switch">
-      <button data-lang="pt-br" title="Português"><img src="assets/flags/br.svg" alt="PT"></button>
-      <button data-lang="en" title="English"><img src="assets/flags/us.svg" alt="EN"></button>
-      <button data-lang="es" title="Español"><img src="assets/flags/es.svg" alt="ES"></button>
-    </nav>
-  </header>
-  <main id="chat">
-    <div class="welcome" id="welcome"></div>
-  </main>
-  <footer>
-    <div class="image-preview" id="image-preview" hidden>
-      <img id="preview-img" alt="">
-      <button id="preview-remove">×</button>
+  <div class="page-wrap">
+    <header class="pill">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="9" r="4.5" fill="currentColor" opacity="0.9"/>
+            <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+          </svg>
+        </span>
+        <span class="brand-name" id="title">1 Click Render <span class="brand-sub">— Ajuda</span></span>
+      </div>
+      <div class="header-right">
+        <nav class="lang-switch" id="lang-switch">
+          <button data-lang="pt-br" title="Português"><img src="assets/flags/br.svg" alt="PT" width="22" height="16"></button>
+          <button data-lang="en" title="English"><img src="assets/flags/us.svg" alt="EN" width="22" height="16"></button>
+          <button data-lang="es" title="Español"><img src="assets/flags/es.svg" alt="ES" width="22" height="16"></button>
+        </nav>
+        <a class="house-logo" href="https://institutometrik.com.br" target="_blank" rel="noopener noreferrer">METRIK Instituto</a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="welcome-state" id="welcome-state">
+        <div class="hero">
+          <h1 id="hero-title">1 Click Render — Ajuda</h1>
+          <p id="hero-sub">Suporte oficial. Pergunte sobre instalação, ativação, viewport, prompts e método.</p>
+        </div>
+        <div class="suggestions" id="suggestions">
+
+          <div class="suggestion" data-question="Como instalo o plugin no SketchUp?">
+            <span class="label" data-i18n="suggestion_install">Instalação</span>
+            <div class="card" role="button" tabindex="0" aria-label="Sugestão: Instalação">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polyline points="8 17 12 21 16 17"/>
+                <line x1="12" y1="3" x2="12" y2="21"/>
+                <path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/>
+              </svg>
+            </div>
+            <span class="placeholder" data-i18n="select_placeholder">Selecionar</span>
+          </div>
+
+          <div class="suggestion" data-question="Como ativo o plugin 1 Click Render?">
+            <span class="label" data-i18n="suggestion_activation">Ativação</span>
+            <div class="card" role="button" tabindex="0" aria-label="Sugestão: Ativação">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+              </svg>
+            </div>
+            <span class="placeholder" data-i18n="select_placeholder">Selecionar</span>
+          </div>
+
+          <div class="suggestion" data-question="Como configurar o viewport corretamente no SketchUp?">
+            <span class="label" data-i18n="suggestion_viewport">Viewport</span>
+            <div class="card" role="button" tabindex="0" aria-label="Sugestão: Viewport">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <span class="placeholder" data-i18n="select_placeholder">Selecionar</span>
+          </div>
+
+          <div class="suggestion" data-question="Tive um erro ao gerar o render, como resolvo?">
+            <span class="label" data-i18n="suggestion_errors">Erros</span>
+            <div class="card" role="button" tabindex="0" aria-label="Sugestão: Erros">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <span class="placeholder" data-i18n="select_placeholder">Selecionar</span>
+          </div>
+
+          <div class="suggestion" data-question="Como funciona o método 1 Click Render?">
+            <span class="label" data-i18n="suggestion_method">Método</span>
+            <div class="card" role="button" tabindex="0" aria-label="Sugestão: Método">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <span class="placeholder" data-i18n="select_placeholder">Selecionar</span>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="chat-state" id="chat-state" hidden>
+        <!-- mensagens injetadas via JS -->
+      </section>
+    </main>
+
+    <div class="input-area">
+      <div class="input-wrap">
+        <div class="input-shell">
+          <textarea id="input" rows="1" placeholder="Como posso te ajudar hoje?"></textarea>
+          <div class="input-toolbar">
+            <div class="left">
+              <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" hidden>
+              <button class="icon" id="attach" title="Anexar imagem">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+              </button>
+            </div>
+            <div class="right">
+              <button class="send" id="send" aria-label="Enviar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="19" x2="12" y2="5"/>
+                  <polyline points="5 12 12 5 19 12"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="image-preview" id="image-preview" hidden>
+            <img id="preview-img" alt="">
+            <button id="preview-remove" aria-label="Remover imagem">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+          <div class="error-log-area" id="error-log-area" hidden>
+            <textarea id="error-log" rows="4"></textarea>
+          </div>
+        </div>
+        <div class="error-log-toggle" id="error-log-toggle">+ Cole aqui o log de erro (opcional)</div>
+      </div>
+      <footer class="footer-meta">1 Click Render — Suporte &middot; &copy; 2026 METRIK Instituto</footer>
     </div>
-    <div class="input-row">
-      <button class="icon" id="attach" title="Anexar imagem">📎</button>
-      <textarea id="input" rows="1"></textarea>
-      <button class="primary" id="send">Enviar</button>
-    </div>
-    <div class="error-log-toggle" id="error-log-toggle">＋ Cole aqui o log de erro (opcional)</div>
-    <div class="error-log-area" id="error-log-area" hidden>
-      <textarea id="error-log" rows="4"></textarea>
-    </div>
-    <input type="file" id="file-input" accept="image/png,image/jpeg,image/webp" hidden>
-  </footer>
+  </div>
   <script type="module" src="assets/app.js"></script>
 </body>
 </html>

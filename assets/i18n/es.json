@@ -1,6 +1,8 @@
 {
   "title": "1 Click Render — Ayuda",
-  "placeholder": "Escribe tu pregunta aquí...",
+  "hero_title": "1 Click Render — Ayuda",
+  "hero_sub": "Soporte oficial. Pregunta sobre instalación, activación, viewport, prompts y método.",
+  "placeholder": "¿Cómo puedo ayudarte hoy?",
   "send": "Enviar",
   "attach": "Adjuntar imagen",
   "welcome": "¡Hola! Soy el asistente de ayuda de 1 Click Render. ¿Cómo puedo ayudarte?",
@@ -9,5 +11,11 @@
   "image_too_large": "Imagen demasiado grande (máx 4MB)",
   "thinking": "Pensando...",
   "rate_limit": "Has hecho demasiadas preguntas. Por favor espera unos minutos antes de continuar.",
-  "error_generic": "Disculpa, hubo un error. Por favor intenta de nuevo."
+  "error_generic": "Disculpa, hubo un error. Por favor intenta de nuevo.",
+  "suggestion_install": "Instalación",
+  "suggestion_activation": "Activación",
+  "suggestion_viewport": "Viewport",
+  "suggestion_errors": "Errores",
+  "suggestion_method": "Método",
+  "select_placeholder": "Seleccionar"
 }
