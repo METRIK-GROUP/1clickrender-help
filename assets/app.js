@@ -13,15 +13,43 @@ async function loadI18n(lang) {
   STATE.i18n = await r.json();
   document.documentElement.lang = lang;
   document.title = STATE.i18n.title;
-  $("title").textContent = STATE.i18n.title;
+
+  const titleEl = $("title");
+  if (titleEl) titleEl.textContent = STATE.i18n.title;
+
+  const heroTitleEl = $("hero-title");
+  if (heroTitleEl) heroTitleEl.textContent = STATE.i18n.hero_title;
+
+  const heroSubEl = $("hero-sub");
+  if (heroSubEl) heroSubEl.textContent = STATE.i18n.hero_sub;
+
   $("input").placeholder = STATE.i18n.placeholder;
-  $("send").textContent = STATE.i18n.send;
   $("attach").title = STATE.i18n.attach;
-  $("welcome").textContent = STATE.i18n.welcome;
-  $("error-log-toggle").textContent = "＋ " + STATE.i18n.error_log_label;
+  $("error-log-toggle").textContent = "+ " + STATE.i18n.error_log_label;
+
+  // Update suggestion labels
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (STATE.i18n[key]) el.textContent = STATE.i18n[key];
+  });
+
   document.querySelectorAll("#lang-switch button").forEach((b) => {
     b.classList.toggle("active", b.dataset.lang === lang);
   });
+}
+
+function showWelcomeState() {
+  const ws = $("welcome-state");
+  const cs = $("chat-state");
+  if (ws) ws.hidden = false;
+  if (cs) cs.hidden = true;
+}
+
+function showChatState() {
+  const ws = $("welcome-state");
+  const cs = $("chat-state");
+  if (ws) ws.hidden = true;
+  if (cs) cs.hidden = false;
 }
 
 function renderMarkdown(text) {
@@ -29,6 +57,8 @@ function renderMarkdown(text) {
 }
 
 function appendMessage(role, content, messageId = null) {
+  showChatState();
+
   const div = document.createElement("div");
   div.className = `msg ${role}`;
   const body = document.createElement("div");
@@ -36,9 +66,15 @@ function appendMessage(role, content, messageId = null) {
   body.innerHTML = renderMarkdown(content);
   div.appendChild(body);
   if (role === "assistant" && messageId) attachFeedback(div, messageId);
-  $("chat").appendChild(div);
-  $("chat").scrollTop = $("chat").scrollHeight;
-  $("welcome").hidden = true;
+
+  $("chat-state").appendChild(div);
+  $("chat-state").scrollTop = $("chat-state").scrollHeight;
+
+  // Scroll into view for the input area
+  setTimeout(() => {
+    div.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, 50);
+
   return div;
 }
 
@@ -46,7 +82,7 @@ function attachFeedback(messageDiv, messageId) {
   if (messageDiv.querySelector(".feedback")) return;
   const fb = document.createElement("div");
   fb.className = "feedback";
-  fb.innerHTML = `<button data-rating="1">👍</button><button data-rating="-1">👎</button>`;
+  fb.innerHTML = `<button data-rating="1">&#128077;</button><button data-rating="-1">&#128078;</button>`;
   fb.querySelectorAll("button").forEach((b) => {
     b.onclick = () => sendFeedback(messageId, Number(b.dataset.rating), b);
   });
@@ -65,7 +101,7 @@ async function sendFeedback(messageId, rating, button) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message_id: messageId, rating }),
     });
-    button.parentElement.innerHTML = `<span style="color:var(--muted);font-size:13px">${STATE.i18n.feedback_thanks}</span>`;
+    button.parentElement.innerHTML = `<span style="color:var(--text-muted);font-size:13px">${STATE.i18n.feedback_thanks}</span>`;
   } catch { /* silently fail */ }
 }
 
@@ -97,6 +133,7 @@ function showImagePreview(dataUrl) {
   $("preview-img").src = dataUrl;
   $("image-preview").hidden = false;
 }
+
 function clearImagePreview() {
   STATE.pendingImage = null;
   $("image-preview").hidden = true;
@@ -119,11 +156,11 @@ async function handleFile(file) {
 async function sendMessage() {
   const message = $("input").value.trim();
   if (!message && !STATE.pendingImage) return;
-  const errorLog = $("error-log").value.trim() || null;
+  const errorLog = $("error-log") ? $("error-log").value.trim() || null : null;
 
   appendMessage("user", message + (STATE.pendingImage ? "\n\n*(imagem anexada)*" : ""));
   $("input").value = "";
-  $("error-log").value = "";
+  if ($("error-log")) $("error-log").value = "";
   $("error-log-area").hidden = true;
   const pendingImage = STATE.pendingImage;
   clearImagePreview();
@@ -145,11 +182,13 @@ async function sendMessage() {
       }),
     });
 
-    if (resp.status === 429) {
-      setMessageBody(placeholder, renderMarkdown(STATE.i18n.rate_limit));
-      return;
+    if (!resp.ok) {
+      if (resp.status === 429) {
+        setMessageBody(placeholder, renderMarkdown(STATE.i18n.rate_limit));
+        return;
+      }
+      throw new Error("HTTP " + resp.status);
     }
-    if (!resp.ok) throw new Error("HTTP " + resp.status);
 
     const reader = resp.body.pipeThrough(new TextDecoderStream()).getReader();
     let buf = "";
@@ -174,7 +213,7 @@ async function sendMessage() {
         } else if (evType === "chunk") {
           fullText += obj.text;
           setMessageBody(placeholder, renderMarkdown(fullText));
-          $("chat").scrollTop = $("chat").scrollHeight;
+          $("chat-state").scrollTop = $("chat-state").scrollHeight;
         } else if (evType === "replace") {
           fullText = obj.text;
           setMessageBody(placeholder, renderMarkdown(fullText));
@@ -190,7 +229,8 @@ async function sendMessage() {
   }
 }
 
-// Wire up events
+// ── Wire up events ──────────────────────────────────────────
+
 document.querySelectorAll("#lang-switch button").forEach((b) => {
   b.onclick = async () => {
     STATE.lang = b.dataset.lang;
@@ -200,19 +240,53 @@ document.querySelectorAll("#lang-switch button").forEach((b) => {
 });
 
 $("send").onclick = sendMessage;
+
 $("input").addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     sendMessage();
   }
 });
+
+// Auto-resize textarea
+$("input").addEventListener("input", () => {
+  const el = $("input");
+  el.style.height = "auto";
+  el.style.height = Math.min(el.scrollHeight, 200) + "px";
+});
+
 $("attach").onclick = () => $("file-input").click();
+
 $("file-input").addEventListener("change", (e) => handleFile(e.target.files[0]));
+
 $("preview-remove").onclick = clearImagePreview;
+
 $("error-log-toggle").onclick = () => {
   $("error-log-area").hidden = !$("error-log-area").hidden;
 };
 
+// Suggestion card click
+document.querySelectorAll(".suggestion").forEach((s) => {
+  const activate = () => {
+    const question = s.dataset.question;
+    if (!question) return;
+    $("input").value = question;
+    $("input").style.height = "auto";
+    $("input").style.height = Math.min($("input").scrollHeight, 200) + "px";
+    $("input").focus();
+    sendMessage();
+  };
+
+  s.addEventListener("click", activate);
+  s.querySelector(".card")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      activate();
+    }
+  });
+});
+
+// Paste image
 document.addEventListener("paste", async (e) => {
   for (const item of e.clipboardData.items) {
     if (item.type.startsWith("image/")) {
