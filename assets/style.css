@@ -146,8 +146,8 @@ body::after {
 }
 
 .brand-logo {
-  height: 40px;
-  width: auto;
+  height: 32px;
+  width: 32px;
   display: block;
   filter: invert(var(--logo-invert, 0));
 }
