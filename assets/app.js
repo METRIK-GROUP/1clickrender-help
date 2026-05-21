@@ -170,16 +170,14 @@ async function sendMessage() {
   let assistantMessageId = null;
 
   try {
+    const payload = { message, lang: STATE.lang };
+    if (STATE.sessionId) payload.session_id = STATE.sessionId;
+    if (pendingImage) payload.image_base64 = pendingImage;
+    if (errorLog) payload.error_log = errorLog;
     const resp = await fetch(`${EDGE}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        session_id: STATE.sessionId,
-        message,
-        image_base64: pendingImage,
-        error_log: errorLog,
-        lang: STATE.lang,
-      }),
+      body: JSON.stringify(payload),
     });
 
     if (!resp.ok) {

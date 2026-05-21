@@ -248,6 +248,13 @@ body {
   gap: 4px;
 }
 
+.chat-state[hidden],
+.welcome-state[hidden],
+.error-log-area[hidden],
+.error-log-toggle[hidden] {
+  display: none;
+}
+
 /* ── Messages ───────────────────────────────────────────────── */
 .msg {
   padding: 16px 20px;
@@ -444,6 +451,10 @@ button.send svg {
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.image-preview[hidden] {
+  display: none;
 }
 
 .image-preview img {
