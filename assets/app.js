@@ -318,6 +318,19 @@ async function maybeResolveToken() {
   } catch { /* ignore */ }
 }
 
+// Theme toggle
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  try { localStorage.setItem("theme", theme); } catch {}
+}
+const themeToggleBtn = $("theme-toggle");
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme") || "dark";
+    applyTheme(current === "dark" ? "light" : "dark");
+  });
+}
+
 (async () => {
   await loadI18n(STATE.lang);
   await maybeResolveToken();

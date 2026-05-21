@@ -10,6 +10,15 @@
     if (location.hostname === 'institutometrik.com.br') {
       document.write('<base href="https://1clickrender-help.vercel.app/">');
     }
+    // Apply persisted theme before paint to avoid flicker.
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = saved || (sysLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,19 +30,35 @@
 <body>
   <div class="page-wrap">
     <header class="pill">
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true">
-          <img src="assets/1cr-logo.png" alt="1 Click Render" class="brand-logo">
-        </span>
-        <span class="brand-name" id="title" data-i18n="brand_name">Assistente de IA</span>
-      </div>
+      <a class="brand" href="https://1clickrender.com.br" target="_blank" rel="noopener noreferrer" aria-label="1 Click Render">
+        <img src="assets/1cr-logo-white.png" alt="1 Click Render" class="brand-logo">
+      </a>
       <div class="header-right">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema" title="Alternar tema">
+          <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <line x1="12" y1="2" x2="12" y2="4"/>
+            <line x1="12" y1="20" x2="12" y2="22"/>
+            <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>
+            <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+            <line x1="2" y1="12" x2="4" y2="12"/>
+            <line x1="20" y1="12" x2="22" y2="12"/>
+            <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/>
+            <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+          </svg>
+        </button>
         <nav class="lang-switch" id="lang-switch">
-          <button data-lang="pt-br" title="Português"><img src="assets/flags/br.svg" alt="PT" width="22" height="16"></button>
-          <button data-lang="en" title="English"><img src="assets/flags/us.svg" alt="EN" width="22" height="16"></button>
-          <button data-lang="es" title="Español"><img src="assets/flags/es.svg" alt="ES" width="22" height="16"></button>
+          <button data-lang="pt-br" title="Português"><img src="assets/flags/br.svg" alt="PT"></button>
+          <button data-lang="en" title="English"><img src="assets/flags/us.svg" alt="EN"></button>
+          <button data-lang="es" title="Español"><img src="assets/flags/es.svg" alt="ES"></button>
         </nav>
-        <a class="house-logo" href="https://institutometrik.com.br" target="_blank" rel="noopener noreferrer">METRIK Instituto</a>
+        <div class="signature">
+          <img src="assets/metrik-logo-white.png" alt="METRIK Instituto" class="signature-logo">
+          <span class="signature-by">por <a href="https://instagram.com/rodrigorosar" target="_blank" rel="noopener noreferrer">Rodrigo Rosar</a></span>
+        </div>
       </div>
     </header>
 
