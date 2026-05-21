@@ -22,8 +22,7 @@ async function loadI18n(lang) {
   const titleEl = $("title");
   if (titleEl) titleEl.textContent = STATE.i18n.title;
 
-  const heroTitleEl = $("hero-title");
-  if (heroTitleEl) heroTitleEl.textContent = STATE.i18n.hero_title;
+  // hero-title is now an <img> (logo), no textContent needed.
 
   const heroSubEl = $("hero-sub");
   if (heroSubEl) heroSubEl.textContent = STATE.i18n.hero_sub;
