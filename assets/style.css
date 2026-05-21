@@ -4,36 +4,36 @@
 
 :root,
 :root[data-theme="dark"] {
-  --bg-base: #07090d;
-  --card: rgba(255,255,255,0.04);
-  --card-hover: rgba(255,255,255,0.07);
-  --border: rgba(255,255,255,0.07);
-  --border-hover: rgba(255,255,255,0.16);
+  --bg-base: #0a0d13;
+  --card: rgba(255,255,255,0.045);
+  --card-hover: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.18);
   --text-primary: #f5f5f7;
-  --text-secondary: rgba(245,245,247,0.6);
-  --text-muted: rgba(245,245,247,0.35);
+  --text-secondary: rgba(245,245,247,0.62);
+  --text-muted: rgba(245,245,247,0.38);
   --accent: #ffffff;
-  --msg-user-bg: rgba(255,255,255,0.07);
-  --msg-assistant-bg: rgba(255,255,255,0.04);
-  --pill-bg: rgba(255,255,255,0.04);
+  --msg-user-bg: rgba(255,255,255,0.08);
+  --msg-assistant-bg: rgba(255,255,255,0.045);
+  --pill-bg: rgba(255,255,255,0.05);
   --teal: #1a7a6b;
-  --teal-glow: rgba(26, 122, 107, 0.18);
+  --teal-glow: rgba(26, 122, 107, 0.22);
   --logo-invert: 0;
-  --aurora-1: rgba(26, 122, 107, 0.22);
-  --aurora-2: rgba(80, 110, 160, 0.16);
-  --aurora-3: rgba(26, 122, 107, 0.14);
-  --bg-grad-top: #0c1016;
-  --bg-grad-mid: #07090d;
-  --bg-grad-bot: #050608;
-  --dot-color: rgba(255,255,255,0.025);
+  --aurora-1: rgba(26, 122, 107, 0.32);
+  --aurora-2: rgba(80, 110, 160, 0.22);
+  --aurora-3: rgba(26, 122, 107, 0.20);
+  --bg-grad-top: #1c2230;
+  --bg-grad-mid: #10141d;
+  --bg-grad-bot: #07090d;
+  --dot-color: rgba(255,255,255,0.03);
   --input-area-bg-1: transparent;
-  --input-area-bg-2: rgba(7,9,13,0.7);
-  --input-area-bg-3: rgba(7,9,13,0.95);
-  --input-area-bg-4: #07090d;
+  --input-area-bg-2: rgba(10,13,19,0.7);
+  --input-area-bg-3: rgba(10,13,19,0.95);
+  --input-area-bg-4: #0a0d13;
   --send-bg: rgba(255,255,255,0.08);
   --send-bg-hover: rgba(255,255,255,0.16);
-  --shadow-color: rgba(0,0,0,0.35);
-  --shadow-color-strong: rgba(0,0,0,0.5);
+  --shadow-color: rgba(0,0,0,0.4);
+  --shadow-color-strong: rgba(0,0,0,0.55);
 }
 
 :root[data-theme="light"] {
@@ -94,10 +94,10 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60% 50% at 18% 12%, var(--aurora-1) 0%, transparent 60%),
-    radial-gradient(55% 45% at 82% 18%, var(--aurora-2) 0%, transparent 65%),
-    radial-gradient(80% 60% at 50% 110%, var(--aurora-3) 0%, transparent 60%),
-    linear-gradient(180deg, var(--bg-grad-top) 0%, var(--bg-grad-mid) 70%, var(--bg-grad-bot) 100%);
+    radial-gradient(75% 60% at 15% 8%, var(--aurora-1) 0%, transparent 70%),
+    radial-gradient(70% 55% at 85% 12%, var(--aurora-2) 0%, transparent 70%),
+    radial-gradient(90% 65% at 50% 100%, var(--aurora-3) 0%, transparent 65%),
+    linear-gradient(180deg, var(--bg-grad-top) 0%, var(--bg-grad-mid) 45%, var(--bg-grad-bot) 100%);
   pointer-events: none;
 }
 
@@ -220,26 +220,13 @@ body::after {
   display: block;
 }
 
-.signature {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 4px;
-  white-space: nowrap;
-}
-
-.signature-logo {
-  height: 16px;
-  width: auto;
-  filter: invert(var(--logo-invert, 0));
-  opacity: 0.85;
-}
-
 .signature-by {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-muted);
   letter-spacing: 0;
+  margin-left: 4px;
+  white-space: nowrap;
 }
 
 .signature-by a {
