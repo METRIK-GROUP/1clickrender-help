@@ -32,37 +32,41 @@
   --input-area-bg-4: #07090d;
   --send-bg: rgba(255,255,255,0.08);
   --send-bg-hover: rgba(255,255,255,0.16);
+  --shadow-color: rgba(0,0,0,0.35);
+  --shadow-color-strong: rgba(0,0,0,0.5);
 }
 
 :root[data-theme="light"] {
-  --bg-base: #f4f5f7;
-  --card: rgba(255,255,255,0.7);
-  --card-hover: rgba(255,255,255,0.85);
-  --border: rgba(15,18,25,0.08);
-  --border-hover: rgba(15,18,25,0.18);
-  --text-primary: #1a1d24;
-  --text-secondary: rgba(26,29,36,0.65);
-  --text-muted: rgba(26,29,36,0.42);
-  --accent: #1a1d24;
-  --msg-user-bg: rgba(255,255,255,0.85);
-  --msg-assistant-bg: rgba(255,255,255,0.65);
-  --pill-bg: rgba(255,255,255,0.7);
+  --bg-base: #eef0f4;
+  --card: rgba(255,255,255,0.8);
+  --card-hover: rgba(255,255,255,1);
+  --border: rgba(15,18,25,0.12);
+  --border-hover: rgba(15,18,25,0.24);
+  --text-primary: #14171d;
+  --text-secondary: rgba(20,23,29,0.72);
+  --text-muted: rgba(20,23,29,0.5);
+  --accent: #14171d;
+  --msg-user-bg: rgba(255,255,255,0.92);
+  --msg-assistant-bg: rgba(255,255,255,0.72);
+  --pill-bg: rgba(255,255,255,0.78);
   --teal: #1a7a6b;
-  --teal-glow: rgba(26, 122, 107, 0.22);
+  --teal-glow: rgba(26, 122, 107, 0.28);
   --logo-invert: 1;
-  --aurora-1: rgba(26, 122, 107, 0.14);
-  --aurora-2: rgba(80, 110, 160, 0.10);
-  --aurora-3: rgba(26, 122, 107, 0.08);
-  --bg-grad-top: #f7f8fb;
-  --bg-grad-mid: #f0f1f5;
-  --bg-grad-bot: #e7e9ee;
-  --dot-color: rgba(15,18,25,0.04);
+  --aurora-1: rgba(26, 122, 107, 0.20);
+  --aurora-2: rgba(80, 110, 160, 0.16);
+  --aurora-3: rgba(26, 122, 107, 0.12);
+  --bg-grad-top: #f3f5f9;
+  --bg-grad-mid: #e9ebf0;
+  --bg-grad-bot: #dee1e8;
+  --dot-color: rgba(15,18,25,0.05);
   --input-area-bg-1: transparent;
-  --input-area-bg-2: rgba(244,245,247,0.7);
-  --input-area-bg-3: rgba(244,245,247,0.95);
-  --input-area-bg-4: #f4f5f7;
+  --input-area-bg-2: rgba(238,240,244,0.75);
+  --input-area-bg-3: rgba(238,240,244,0.95);
+  --input-area-bg-4: #eef0f4;
   --send-bg: rgba(15,18,25,0.08);
   --send-bg-hover: rgba(15,18,25,0.16);
+  --shadow-color: rgba(20,23,29,0.10);
+  --shadow-color-strong: rgba(20,23,29,0.18);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -131,7 +135,7 @@ body::after {
   gap: 16px;
   backdrop-filter: blur(22px) saturate(140%);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.25);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px var(--shadow-color);
 }
 
 .brand {
@@ -329,14 +333,14 @@ body::after {
   transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
   backdrop-filter: blur(22px) saturate(140%);
   -webkit-backdrop-filter: blur(22px) saturate(140%);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px rgba(0,0,0,0.25);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 24px var(--shadow-color, rgba(0,0,0,0.25));
 }
 
 .suggestion:hover .card {
   background: var(--card-hover);
   border-color: var(--border-hover);
   transform: translateY(-2px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px var(--teal-glow);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 12px 32px var(--shadow-color-strong), 0 0 0 1px var(--teal-glow);
 }
 
 .suggestion:active .card {
@@ -403,7 +407,7 @@ body::after {
   background: var(--msg-assistant-bg);
   border: 1px solid var(--border);
   margin-right: auto;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 18px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 6px 18px var(--shadow-color);
 }
 
 .msg pre {
@@ -509,12 +513,12 @@ body::after {
   transition: border-color 0.2s, box-shadow 0.2s;
   backdrop-filter: blur(28px) saturate(150%);
   -webkit-backdrop-filter: blur(28px) saturate(150%);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 12px 36px rgba(0,0,0,0.5);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset, 0 12px 36px var(--shadow-color-strong);
 }
 
 .input-shell:focus-within {
   border-color: var(--border-hover);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.07) inset, 0 12px 36px rgba(0,0,0,0.5), 0 0 0 1px var(--teal-glow);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.07) inset, 0 12px 36px var(--shadow-color-strong), 0 0 0 1px var(--teal-glow);
 }
 
 textarea#input {
@@ -654,7 +658,7 @@ button.send svg {
 
 .error-log-area textarea {
   width: 100%;
-  background: rgba(0,0,0,0.3);
+  background: var(--send-bg);
   border: 1px solid var(--border);
   border-radius: 12px;
   color: var(--text-primary);
