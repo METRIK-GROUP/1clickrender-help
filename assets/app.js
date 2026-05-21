@@ -1,7 +1,12 @@
 const EDGE = "https://fpyabrrjtwrsodyvjjlp.supabase.co/functions/v1"; // replaced at deploy via env
+
+// Cleanup any legacy persistent sessionId from earlier builds — chat session
+// should NOT survive page reloads (sessionStorage only).
+try { localStorage.removeItem("sessionId"); } catch {}
+
 const STATE = {
   lang: localStorage.getItem("lang") || (navigator.language.startsWith("en") ? "en" : navigator.language.startsWith("es") ? "es" : "pt-br"),
-  sessionId: localStorage.getItem("sessionId") || null,
+  sessionId: sessionStorage.getItem("sessionId") || null,
   i18n: {},
   pendingImage: null,
 };
@@ -68,21 +73,31 @@ function appendMessage(role, content, messageId = null) {
   if (role === "assistant" && messageId) attachFeedback(div, messageId);
 
   $("chat-state").appendChild(div);
-  $("chat-state").scrollTop = $("chat-state").scrollHeight;
 
-  // Scroll into view for the input area
-  setTimeout(() => {
-    div.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, 50);
+  // Smooth scroll so the new message is clearly above the sticky input.
+  // We use window scroll (not container scroll) because the input bar is sticky
+  // at the bottom of the viewport — block:'end' alone hides the message behind it.
+  requestAnimationFrame(() => {
+    const inputArea = document.querySelector(".input-area");
+    const inputH = inputArea ? inputArea.getBoundingClientRect().height : 200;
+    const rect = div.getBoundingClientRect();
+    const target = window.scrollY + rect.bottom - window.innerHeight + inputH + 24;
+    window.scrollTo({ top: Math.max(0, target), behavior: "smooth" });
+  });
 
   return div;
 }
+
+const ICON_THUMB_UP = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H7V10l4.34-7.71a1.5 1.5 0 0 1 2.74.41z"/></svg>`;
+const ICON_THUMB_DOWN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H17v12l-4.34 7.71a1.5 1.5 0 0 1-2.74-.41z"/></svg>`;
 
 function attachFeedback(messageDiv, messageId) {
   if (messageDiv.querySelector(".feedback")) return;
   const fb = document.createElement("div");
   fb.className = "feedback";
-  fb.innerHTML = `<button data-rating="1">&#128077;</button><button data-rating="-1">&#128078;</button>`;
+  fb.innerHTML =
+    `<button class="fb-btn" data-rating="1" aria-label="Útil">${ICON_THUMB_UP}</button>` +
+    `<button class="fb-btn" data-rating="-1" aria-label="Não útil">${ICON_THUMB_DOWN}</button>`;
   fb.querySelectorAll("button").forEach((b) => {
     b.onclick = () => sendFeedback(messageId, Number(b.dataset.rating), b);
   });
@@ -207,11 +222,16 @@ async function sendMessage() {
         const obj = JSON.parse(data);
         if (evType === "session") {
           STATE.sessionId = obj.session_id;
-          localStorage.setItem("sessionId", obj.session_id);
+          sessionStorage.setItem("sessionId", obj.session_id);
         } else if (evType === "chunk") {
           fullText += obj.text;
           setMessageBody(placeholder, renderMarkdown(fullText));
-          $("chat-state").scrollTop = $("chat-state").scrollHeight;
+          // Keep the streaming message above the sticky input as it grows.
+          const inputArea = document.querySelector(".input-area");
+          const inputH = inputArea ? inputArea.getBoundingClientRect().height : 200;
+          const rect = placeholder.getBoundingClientRect();
+          const target = window.scrollY + rect.bottom - window.innerHeight + inputH + 24;
+          if (target > window.scrollY) window.scrollTo({ top: target, behavior: "instant" });
         } else if (evType === "replace") {
           fullText = obj.text;
           setMessageBody(placeholder, renderMarkdown(fullText));
@@ -309,7 +329,7 @@ async function maybeResolveToken() {
     if (!r.ok) return;
     const data = await r.json();
     STATE.sessionId = data.session_id;
-    localStorage.setItem("sessionId", data.session_id);
+    sessionStorage.setItem("sessionId", data.session_id);
     if (data.lang) {
       STATE.lang = data.lang;
       localStorage.setItem("lang", data.lang);

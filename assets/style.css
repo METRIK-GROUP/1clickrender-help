@@ -453,23 +453,39 @@ body::after {
 }
 
 .feedback {
-  margin-top: 12px;
+  margin-top: 10px;
   display: flex;
-  gap: 6px;
+  gap: 4px;
 }
 
 .feedback button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   color: var(--text-muted);
-  padding: 4px 10px;
   cursor: pointer;
-  border-radius: 8px;
-  font-size: 13px;
-  transition: color 0.15s, border-color 0.15s;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.feedback button svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .feedback button:hover {
+  color: var(--text-primary);
+  background: var(--send-bg);
+}
+
+.feedback button:active,
+.feedback button.is-active {
   color: var(--text-primary);
   border-color: var(--border-hover);
 }
