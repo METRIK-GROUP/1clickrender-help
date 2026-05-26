@@ -19,5 +19,16 @@
   "suggestion_viewport": "Viewport",
   "suggestion_errors": "Erros",
   "suggestion_method": "Método",
-  "select_placeholder": "Selecionar"
+  "select_placeholder": "Selecionar",
+  "gate_title": "Acesso ao Assistente",
+  "gate_sub": "Digite o email com a licença ativa do 1 Click Render.",
+  "gate_placeholder": "seu@email.com",
+  "gate_submit": "Entrar",
+  "gate_checking": "Verificando...",
+  "gate_invalid_email": "Email inválido.",
+  "gate_not_found": "Esse email não consta na nossa base de assinantes ativos. Se a compra foi recente, aguarde a sincronização. Caso contrário, fale com o suporte ou conheça o produto.",
+  "gate_rate_limit": "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.",
+  "gate_error": "Não foi possível validar. Tente novamente em instantes.",
+  "gate_btn_support": "Falar com suporte",
+  "gate_btn_buy": "Conhecer o 1 Click Render"
 }

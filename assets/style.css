@@ -817,3 +817,192 @@ button.send svg {
   .suggestion .label { font-size: 8px; }
   .suggestion .placeholder { font-size: 11px; }
 }
+
+/* ============================================================
+   Access Gate — modal de validação de email/licença
+   ============================================================ */
+
+/* Estado default: gate escondido, page-wrap visível.
+   Quando <html class="needs-gate"> (setado pelo inline script no head antes do paint),
+   o page-wrap fica oculto e o gate aparece. Sem flash de conteúdo. */
+.access-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(80% 60% at 50% 0%, var(--aurora-1), transparent 60%),
+    radial-gradient(60% 50% at 100% 100%, var(--aurora-2), transparent 60%),
+    linear-gradient(180deg, var(--bg-grad-top), var(--bg-grad-mid) 50%, var(--bg-grad-bot));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+html.needs-gate .access-gate {
+  display: flex;
+}
+
+html.needs-gate body {
+  overflow: hidden;
+}
+
+html.needs-gate .page-wrap {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.access-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow: 0 20px 60px var(--shadow-color-strong);
+  text-align: center;
+}
+
+.access-logo {
+  height: 60px;
+  width: auto;
+  margin: 0 auto 24px;
+  display: block;
+  filter: invert(var(--logo-invert));
+}
+
+.access-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.access-sub {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+}
+
+.access-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.access-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--msg-assistant-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.access-input::placeholder {
+  color: var(--text-muted);
+}
+
+.access-input:focus {
+  border-color: var(--border-hover);
+  background: var(--card-hover);
+}
+
+.access-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.access-submit {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--accent);
+  color: var(--bg-base);
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  transition: opacity .15s ease, transform .05s ease;
+}
+
+.access-submit:hover { opacity: 0.92; }
+.access-submit:active { transform: translateY(1px); }
+
+.access-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.access-status {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  min-height: 18px;
+  margin-top: 4px;
+}
+
+.access-status.is-error { color: #e57373; }
+.access-status.is-info  { color: var(--text-secondary); }
+
+.access-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.access-actions[hidden] { display: none; }
+
+.access-btn-primary,
+.access-btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.access-btn-primary {
+  background: var(--accent);
+  color: var(--bg-base);
+  border: 1px solid var(--accent);
+}
+.access-btn-primary:hover { opacity: 0.92; }
+
+.access-btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+.access-btn-secondary:hover {
+  background: var(--card-hover);
+  border-color: var(--border-hover);
+}
+
+@media (max-width: 480px) {
+  .access-card { padding: 32px 24px; max-width: 100%; }
+  .access-logo { height: 48px; margin-bottom: 20px; }
+  .access-title { font-size: 19px; }
+  .access-sub { font-size: 13px; margin-bottom: 24px; }
+}

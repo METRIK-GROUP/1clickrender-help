@@ -4,6 +4,102 @@ const EDGE = "https://fpyabrrjtwrsodyvjjlp.supabase.co/functions/v1"; // replace
 // should NOT survive page reloads (sessionStorage only).
 try { localStorage.removeItem("sessionId"); } catch {}
 
+// ============================================================
+// Access gate — valida email contra licença ativa do 1CR.
+// Inline script no <head> já marcou html.needs-gate se gate é necessário.
+// Aqui só ligamos o form de validação e revelamos o app após sucesso.
+// ============================================================
+const ACCESS_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 dias
+
+function hideGate() {
+  document.documentElement.classList.remove("needs-gate");
+}
+
+function showGate() {
+  document.documentElement.classList.add("needs-gate");
+}
+
+function setGateStatus(text, kind) {
+  const el = document.getElementById("access-status");
+  if (!el) return;
+  el.textContent = text || "";
+  el.classList.remove("is-error", "is-info");
+  if (kind) el.classList.add(`is-${kind}`);
+}
+
+function showGateRecoveryActions() {
+  const el = document.getElementById("access-actions");
+  if (el) el.hidden = false;
+}
+
+function hideGateRecoveryActions() {
+  const el = document.getElementById("access-actions");
+  if (el) el.hidden = true;
+}
+
+async function submitAccessEmail(rawEmail) {
+  const email = String(rawEmail || "").trim().toLowerCase();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    setGateStatus(STATE.i18n.gate_invalid_email || "Email inválido.", "error");
+    return;
+  }
+
+  const submitBtn = document.getElementById("access-submit");
+  const input = document.getElementById("access-email");
+  if (submitBtn) submitBtn.disabled = true;
+  if (input) input.disabled = true;
+  setGateStatus(STATE.i18n.gate_checking || "Verificando...", "info");
+  hideGateRecoveryActions();
+
+  try {
+    const res = await fetch(`${EDGE}/validate-access`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) {
+      if (res.status === 429) {
+        setGateStatus(STATE.i18n.gate_rate_limit || "Muitas tentativas. Aguarde alguns minutos.", "error");
+      } else {
+        setGateStatus(STATE.i18n.gate_error || "Não foi possível validar. Tente novamente.", "error");
+      }
+      return;
+    }
+    const data = await res.json();
+    if (data && data.valid === true) {
+      const now = Date.now();
+      try {
+        localStorage.setItem("chatAccess", JSON.stringify({
+          email,
+          validatedAt: now,
+          expiresAt: now + ACCESS_TTL_MS,
+        }));
+      } catch {}
+      setGateStatus("", null);
+      hideGate();
+      return;
+    }
+    // valid === false
+    setGateStatus(STATE.i18n.gate_not_found || "Esse email não consta na nossa base de assinantes ativos. Se a compra foi recente, aguarde a sincronização. Caso contrário, fale com o suporte ou conheça o produto.", "error");
+    showGateRecoveryActions();
+  } catch (e) {
+    setGateStatus(STATE.i18n.gate_error || "Não foi possível validar. Tente novamente.", "error");
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
+    if (input) input.disabled = false;
+  }
+}
+
+function wireAccessGate() {
+  const form = document.getElementById("access-form");
+  const input = document.getElementById("access-email");
+  if (!form || !input) return;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    submitAccessEmail(input.value);
+  });
+}
+
 const STATE = {
   lang: localStorage.getItem("lang") || (navigator.language.startsWith("en") ? "en" : navigator.language.startsWith("es") ? "es" : "pt-br"),
   sessionId: sessionStorage.getItem("sessionId") || null,
@@ -35,6 +131,12 @@ async function loadI18n(lang) {
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
     if (STATE.i18n[key]) el.textContent = STATE.i18n[key];
+  });
+
+  // Placeholders (gate input, etc.)
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    if (STATE.i18n[key]) el.placeholder = STATE.i18n[key];
   });
 
   document.querySelectorAll("#lang-switch button").forEach((b) => {
@@ -353,5 +455,6 @@ if (themeToggleBtn) {
 
 (async () => {
   await loadI18n(STATE.lang);
+  wireAccessGate();
   await maybeResolveToken();
 })();

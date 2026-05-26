@@ -19,5 +19,16 @@
   "suggestion_viewport": "Viewport",
   "suggestion_errors": "Errors",
   "suggestion_method": "Method",
-  "select_placeholder": "Select"
+  "select_placeholder": "Select",
+  "gate_title": "Assistant Access",
+  "gate_sub": "Enter the email tied to your active 1 Click Render license.",
+  "gate_placeholder": "you@email.com",
+  "gate_submit": "Enter",
+  "gate_checking": "Checking...",
+  "gate_invalid_email": "Invalid email.",
+  "gate_not_found": "This email isn't in our active subscribers list. If the purchase was recent, wait for the sync to complete. Otherwise, contact support or learn more about the product.",
+  "gate_rate_limit": "Too many attempts. Please wait a few minutes before trying again.",
+  "gate_error": "Couldn't validate. Please try again in a moment.",
+  "gate_btn_support": "Contact support",
+  "gate_btn_buy": "Learn about 1 Click Render"
 }

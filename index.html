@@ -43,6 +43,20 @@
         document.documentElement.setAttribute('data-theme', theme);
       } catch (e) {}
     })();
+    // Decide gate visibility BEFORE paint to avoid content flash.
+    // If localStorage has a valid (non-expired) chatAccess record, skip gate.
+    (function() {
+      try {
+        var raw = localStorage.getItem('chatAccess');
+        if (raw) {
+          var data = JSON.parse(raw);
+          if (data && typeof data.expiresAt === 'number' && data.expiresAt > Date.now()) {
+            return; // valid access, gate stays hidden
+          }
+        }
+      } catch (e) {}
+      document.documentElement.classList.add('needs-gate');
+    })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,6 +66,38 @@
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 </head>
 <body>
+  <!-- Gate de acesso. Visível até validar email contra licença ativa do 1CR.
+       Visibilidade controlada por html.needs-gate (CSS) — set no inline script do head. -->
+  <div class="access-gate" id="access-gate">
+    <div class="access-card">
+      <img src="assets/1cr-logo-white.png" alt="1 Click Render" class="access-logo">
+      <h1 class="access-title" data-i18n="gate_title">Acesso ao Assistente</h1>
+      <p class="access-sub" data-i18n="gate_sub">Digite o email com a licença ativa do 1 Click Render.</p>
+
+      <form class="access-form" id="access-form" novalidate>
+        <input
+          type="email"
+          id="access-email"
+          class="access-input"
+          autocomplete="email"
+          required
+          spellcheck="false"
+          autocapitalize="none"
+          data-i18n-placeholder="gate_placeholder"
+          placeholder="seu@email.com"
+        >
+        <button type="submit" class="access-submit" id="access-submit" data-i18n="gate_submit">Entrar</button>
+      </form>
+
+      <p class="access-status" id="access-status" aria-live="polite"></p>
+
+      <div class="access-actions" id="access-actions" hidden>
+        <a class="access-btn-secondary" href="https://rodrigorosar.com.br/suporte" target="_blank" rel="noopener noreferrer" data-i18n="gate_btn_support">Falar com suporte</a>
+        <a class="access-btn-primary" href="https://institutometrik.com.br/1clickrender" target="_blank" rel="noopener noreferrer" data-i18n="gate_btn_buy">Conhecer o 1 Click Render</a>
+      </div>
+    </div>
+  </div>
+
   <div class="page-wrap">
     <header class="pill">
       <a class="brand" href="https://institutometrik.com.br/1clickrender" target="_blank" rel="noopener noreferrer" aria-label="1 Click Render">
