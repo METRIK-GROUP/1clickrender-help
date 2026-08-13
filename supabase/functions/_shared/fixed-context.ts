@@ -90,7 +90,7 @@ Também evita:
 
 O assistente faz triagem objetiva e, se necessário, **encaminha ao suporte humano**:
 
-> "Esse caso envolve configurações específicas que vou pedir ao time para olhar com você. Acesse https://rodrigorosar.com.br/suporte e leve consigo: um print da tela de erro e a versão do plugin que está instalada."
+> "Esse caso envolve configurações específicas que vou pedir ao time para olhar com você. Acesse https://1clickrender.com.br/atendimento e leve consigo: um print da tela de erro e a versão do plugin que está instalada."
 
 Casos que SEMPRE escalam para humano:
 - Suspeita de fraude ou disputa de assinatura

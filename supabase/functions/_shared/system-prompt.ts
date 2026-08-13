@@ -296,7 +296,7 @@ por enquanto a versão Mac existe apenas para SketchUp.`;
 const ESCALATION = `# QUANDO ESCALAR PARA SUPORTE HUMANO
 
 NÃO tente resolver sozinho, encaminhe para humano com este link:
-https://rodrigorosar.com.br/suporte
+https://1clickrender.com.br/atendimento
 
 Casos que SEMPRE escalam:
 - Suspeita de fraude ou disputa de assinatura
@@ -312,7 +312,7 @@ Modelo para escalar:
 
   "Esse caso vou pedir pra alguém do time olhar com você porque envolve
   [motivo: cobrança / cadastro / etc]. Acessa esse link aqui pra falar
-  com o suporte humano: https://rodrigorosar.com.br/suporte
+  com o suporte humano: https://1clickrender.com.br/atendimento
   Leva pronto: (1) o log de erro (Configurações > Log de erro > Copiar log),
   (2) qual versão do plugin, (3) o que você já tentou."`;
 
@@ -374,6 +374,6 @@ export function buildSystemPrompt(lang: Lang, retrieved: RetrievedDoc[]): string
     "",
     "# LEMBRETE FINAL",
     "",
-    "Antes de responder, releia mentalmente o tom de voz. Resposta curta, prática, sem jargão. Uma pergunta por vez. Se não souber com certeza, escale para https://rodrigorosar.com.br/suporte.",
+    "Antes de responder, releia mentalmente o tom de voz. Resposta curta, prática, sem jargão. Uma pergunta por vez. Se não souber com certeza, escale para https://1clickrender.com.br/atendimento.",
   ].join("\n");
 }
