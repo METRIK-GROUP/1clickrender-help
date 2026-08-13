@@ -199,9 +199,12 @@ status: ativo
 Este é o material de referência para o assistente responder dúvidas e resolver problemas dos alunos. Antes de usar, ler também o [[tom-de-voz-do-assistente|tom de voz do assistente]].
 
 **Versões atuais dos plugins (referência sempre):**
-- SketchUp: v3.3.72
-- Revit: v3.7.0
-- Archicad: v3.3.16
+- SketchUp: v3.13.0
+- Revit: v3.13.0
+- Archicad: v3.13.0 (Windows e Mac)
+
+> [!info] Atualizado em 07/08/2026
+> A 3.13 trouxe o editor novo no SketchUp (seleção por material, ajuste de cor em camadas, histórico, Melhorar em HD e 4K), a Biblioteca com "Todos os projetos" e a recalibração dos prompts com trava de cor, que vale para os três plugins. Ver [[1cr-historico-de-versoes]].
 
 > [!info] Regra de ouro
 > Quando aparece um problema, **a primeira pergunta é sempre**: "qual versão do plugin você está usando?". A maioria dos bugs já foi corrigida nas versões mais novas. Pedir pra atualizar resolve ~70% dos casos.
@@ -368,6 +371,32 @@ Se o aluno reclamar de download lento, sugere a versão Lite. Se reclamar de pro
 - Sem permissão na pasta.
 - Disco cheio.
 
+### 4.5 (Mac) "Aparece 'Vamos preparar o ambiente' e mesmo instalando o Python não funciona"
+
+**Apareceu na versão:** SketchUp v3.9.4 (Mac).
+
+**Contexto:** No Mac o plugin precisa de um Python 3.10, 3.11 ou 3.12 para renderizar. Ele tenta baixar sozinho um Python isolado (cerca de 25 MB). Quando esse download falha, mostra a tela "Vamos preparar o ambiente" com "Não foi possível preparar automaticamente".
+
+São dois problemas somados:
+
+**A) Download automático bloqueado ("Preparar agora" não avança):** o componente vem do GitHub, e antivírus, firewall, VPN ou rede corporativa costumam bloquear. Orientar a tentar em outra rede ou com o antivírus pausado.
+
+**B) Python manual não aceito:** o plugin só aceita 3.10 a 3.12. Quem baixa "a mais recente" do python.org acaba pegando 3.13 ou 3.14, que o plugin recusa. A solução é instalar a 3.12 pelo link direto e reabrir o SketchUp. Não precisa desinstalar a outra versão, o plugin escolhe a 3.12 sozinho.
+
+**Link direto do Python 3.12 (Mac):** https://www.python.org/ftp/python/3.12.10/python-3.12.10-macos11.pkg
+
+**Confirmar que resolveu:** em Configurações → Diagnóstico, o campo "Python sistema" deixa de mostrar "(não encontrado)".
+
+**Mensagem pronta para o aluno (nunca pedir Terminal):**
+> Dois pontos: o download automático foi bloqueado (normalmente antivírus, firewall ou a rede) e o Python que você instalou não é a versão que o plugin aceita. Faz assim:
+> 1. Instale o Python 3.12 por este link: https://www.python.org/ftp/python/3.12.10/python-3.12.10-macos11.pkg (abra o arquivo baixado e conclua a instalação).
+> 2. Feche o SketchUp por completo (sair do programa, não só fechar a janela) e abra de novo.
+> Se estiver em rede de empresa ou com antivírus ativo, faça em outra rede ou com o antivírus pausado, porque eles bloqueiam esse passo. Me avisa se funcionou.
+
+**Confirmado em campo:** resolveu para o aluno (v3.9.4, 2026-07-22).
+
+**Quando escalar:** com a 3.12 instalada e o SketchUp reaberto, se "Python sistema" seguir "(não encontrado)" ou o render falhar, pedir o log (Configurações → Log de erro → Copiar) e encaminhar.
+
 ---
 
 ## 5. Ativação e licença
@@ -418,6 +447,21 @@ Importante: como o limite de máquinas é compartilhado, se você bateu no limit
 **O que está acontecendo:** Versões v3.5.0 até v3.5.8 do Revit tinham um botão extra que foi removido a partir da v3.5.9 (alinhamento com SketchUp).
 
 **O que dizer ao aluno:** A função continua existindo. Ir em **Configurações → Gerenciar licença → Liberar**.
+
+### 5.7 "Cancelei a recorrência na Hotmart (sem pedir reembolso) e o plugin me bloqueou"
+
+**Como deve funcionar (corrigido em 2026-07-22):** Cancelar a assinatura recorrente na Hotmart só impede a próxima cobrança. O acesso continua **até o fim do período já pago** (por exemplo, quem assinou o trimestral e cancelou no meio segue com acesso até completar os 3 meses). O servidor passou a respeitar isso automaticamente, sem precisar de ação do suporte.
+
+**Distinguir sempre:**
+- **Cancelamento de recorrência** (a pessoa só não quer renovar): acesso segue até o fim do período. Normal.
+- **Reembolso ou chargeback** (o dinheiro foi devolvido): bloqueia na hora. Correto.
+
+**Se um aluno reportar bloqueio logo após cancelar, sem ter pedido reembolso:**
+1. Confirmar que foi cancelamento e não reembolso.
+2. O acesso já deve estar ativo (a correção está no ar). Pedir para fechar e reabrir o programa por completo.
+3. Se persistir, escalar: é um caso raro em que a data de fim do período não veio no cadastro. O time aplica uma liberação manual até a data correta.
+
+**Contexto técnico (histórico):** até 2026-07-22 o sistema tratava o cancelamento de recorrência como bloqueio imediato. Foi corrigido para o acesso seguir a data de fim do período pago.
 
 ---
 
@@ -711,7 +755,10 @@ Existe um script de reset no Desktop chamado \`Reset-1ClickRender-[SketchUp/Revi
 |---|---|
 | SketchUp | **Sim** |
 | Revit | Não. (O próprio Revit só existe no Windows) |
-| Archicad | Não. (O Archicad existe no Mac, mas o plugin ainda não tem versão Mac) |
+| Archicad | **Sim.** O instalador para Mac é o \`.dmg\` (o Windows usa \`.exe\`) |
+
+> [!warning] Correção de 07/08/2026
+> Este verbete dizia que o Archicad **não** tinha versão Mac. Está errado: existe \`.dmg\` publicado desde a v3.9.1, e a v3.13.0 também tem. Quem respondeu com base na versão antiga desta nota mandou informação errada ao aluno.
 
 ### 14.2 "Posso definir um mood / tamanho / proporção padrão?"
 
@@ -823,7 +870,7 @@ Limitado. Captura de tela pode sair em resolução errada e a interface do plugi
 
 ### Situação: "Aluno no Mac quer Revit ou Archicad"
 
-> "O Revit não existe no Mac (a Autodesk só lança Windows). O Archicad existe no Mac, mas o plugin 1ClickRender-Archicad ainda não tem build pro Mac. No Mac, hoje, só o SketchUp está suportado. A mesma compra continua válida pros 3 plugins, é só que dois deles você só consegue usar quando estiver num Windows."
+> "No Mac funcionam o SketchUp e o Archicad. Pro Archicad, o instalador é o arquivo \`.dmg\` (o \`.exe\` é a versão Windows). O Revit é o único que não roda, e não é limitação nossa: a Autodesk só lança Revit pra Windows. A mesma compra vale pros 3 plugins."
 
 ### Situação: "Instalação Archicad do zero"
 

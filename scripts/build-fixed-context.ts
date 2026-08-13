@@ -3,7 +3,7 @@
 // as a TS module. The two files are ALWAYS injected as fixed context (every chat turn).
 
 const ROOT =
-  "/Users/rodrigorosar/Library/CloudStorage/GoogleDrive-rodrigo@rodrigorosar.com.br/Meu Drive/METRIK I Instituto/Obsidian + Claude/O Cérebro/40 Metrik Instituto/41 Cursos/1 Click Render/_publico";
+  "/Users/rodrigorosar/Library/CloudStorage/GoogleDrive-rodrigo@rodrigorosar.com.br/Meu Drive/METRIK I Cérebro/40 Metrik Instituto/41 Cursos/1 Click Render/_publico";
 
 const OUT = new URL("../supabase/functions/_shared/fixed-context.ts", import.meta.url).pathname;
 

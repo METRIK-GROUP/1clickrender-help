@@ -12,7 +12,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
 const DEFAULT_ROOT =
-  "/Users/rodrigorosar/Library/CloudStorage/GoogleDrive-rodrigo@rodrigorosar.com.br/Meu Drive/METRIK I Instituto/Obsidian + Claude/O Cérebro/40 Metrik Instituto/41 Cursos/1 Click Render/_publico";
+  "/Users/rodrigorosar/Library/CloudStorage/GoogleDrive-rodrigo@rodrigorosar.com.br/Meu Drive/METRIK I Cérebro/40 Metrik Instituto/41 Cursos/1 Click Render/_publico";
 
 const CHUNK_CHARS = 1500;
 const CHUNK_OVERLAP = 200;
