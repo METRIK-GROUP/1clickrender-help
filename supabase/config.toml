@@ -382,3 +382,47 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+# ---------------------------------------------------------------------------
+# Configuração por função (edge functions)
+#
+# POR QUE ISSO EXISTE: sem declarar `verify_jwt` aqui, o Supabase CLI aplica o
+# padrão `verify_jwt = true` a CADA deploy. O front deste projeto não envia
+# header `Authorization`, então o gateway passa a barrar 100% das chamadas com
+# 401 UNAUTHORIZED_NO_AUTH_HEADER antes de chegar no código da função.
+#
+# Foi exatamente o que aconteceu em 13/08/2026: um `supabase functions deploy
+# chat` derrubou o assistente inteiro (inclusive pelos 3 plugins, que abrem a
+# mesma URL) e ficou 6 dias fora do ar sem ninguém perceber.
+#
+# Declarar aqui torna o deploy idempotente: o valor deixa de depender de quem
+# deployou ou de qual flag foi lembrada na linha de comando.
+#
+# A autorização real de cada função é feita dentro dela (rate limit por IP e
+# sessão na `chat`, senha de admin na `admin-auth`, CORS restrito ao domínio).
+# Ver docs/superpowers/specs/2026-05-20-1cr-help-design.md.
+# ---------------------------------------------------------------------------
+
+[functions.chat]
+verify_jwt = false
+
+[functions.feedback]
+verify_jwt = false
+
+[functions.support-context]
+verify_jwt = false
+
+[functions.resolve-token]
+verify_jwt = false
+
+[functions.admin-auth]
+verify_jwt = false
+
+[functions.admin-data]
+verify_jwt = false
+
+[functions.summarize-daily]
+verify_jwt = false
+
+[functions.validate-access]
+verify_jwt = false
