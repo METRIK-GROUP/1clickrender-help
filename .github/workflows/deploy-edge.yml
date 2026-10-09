@@ -1,5 +1,6 @@
 name: deploy-edge
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ["supabase/**", "kb/**"]
@@ -9,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v1
-        with: { deno-version: v1.46.x }
+        with: { deno-version: v2.x }
       - uses: supabase/setup-cli@v1
         with: { version: latest }
       - name: Build KB cache
