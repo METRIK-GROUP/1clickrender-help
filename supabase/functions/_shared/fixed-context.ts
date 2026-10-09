@@ -781,6 +781,26 @@ Hoje só Português brasileiro. Roadmap futuro inclui inglês e espanhol.
 
 Limitado. Captura de tela pode sair em resolução errada e a interface do plugin pode não renderizar bem em algumas configurações de servidor.
 
+### 14.9 "Meu editor não tem o ajuste de cores (contraste, brilho, saturação)"
+
+Revisado em 09/10/2026 (a versão de 09/09 dizia que o painel só existia no SketchUp, o que deixou de ser verdade).
+
+O painel **Cor e tom**, que ajusta matiz, saturação, brilho, contraste e temperatura direto no editor sem gastar render,
+**existe nos três programas**: SketchUp, Archicad e Revit. Ele ajusta a imagem inteira ou só a área pintada com o pincel.
+No Revit ele falhava sempre até a 3.17.5, e no Archicad o ajuste na área pintada falhava até a 3.17.10; os dois foram
+corrigidos em 07/10/2026 (Revit 3.17.6, Archicad 3.17.11).
+
+**Se o aluno não encontra o painel ou ele não funciona:** quase sempre é versão antiga. Pedir para fechar e abrir o
+programa e aceitar a atualização do 1 Click Render.
+
+**O que dizer:**
+
+> O ajuste de Cor e tom está no editor do 1 Click Render no SketchUp, no Archicad e no Revit. Se ele não aparece ou não
+> funciona aí, provavelmente o plugin está numa versão antiga: feche e abra o programa, aceite a atualização quando ela
+> aparecer e abra o editor de novo. Se continuar igual, me mande um print do editor que eu olho.
+
+Se mesmo atualizado o painel não funcionar, pedir a versão do plugin e um print do editor e passar para uma pessoa do time.
+
 ---
 
 ## 15. Triagem rápida — quando o aluno descreve o sintoma
